@@ -1,11 +1,13 @@
 <script>
 	import "../app.css";
+  import Footer from "./Footer.svelte";
 </script>
 
 <div class="app">
 	<main class="bg-blue-500">
 		<slot />
 	</main>
+	<Footer />
 </div>
 
 <style>

@@ -1,83 +1,80 @@
 <script>
   import Icon from '@iconify/svelte';
+  import { clickOutside } from "$lib/mixins";
+  import { fade } from 'svelte/transition';
+  import logo from '$lib/images/AliExpress-logo.png';
 
   let isAccountMenu = false;
   let isCartHover = false;
   let isSearching = false;
 
   let items;
+  let user;
 </script>
 
 <div id="MainLayout" class="w-full fixed z-50">
   <div id="TopMenu" class="w-full bg-[#FAFAFA] border-b md:block hidden">
-    <ul
-      class="flex items-center justify-endtext-xs text-[#333333]font-light px-2 h-10bg-[#FAFAFA] max-w-[1200px]"
-    >
-      <li
-        class="border-r border-r-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
-      >
+    <ul class="flex items-center justify-end text-[#333333]font-light px-2 h-10bg-[#FAFAFA] max-w-[1200px]">
+      <li class="border-r border-r-gray-400 px-3 hover:text-red-600 cursor-pointer">
         Sell on AliExpress
       </li>
-      <li
-        class="border-r border-r-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
-      >
+      <li class="border-r border-r-gray-400 px-3 hover:text-red-600 cursor-pointer">
         Cookie Preferences
       </li>
-      <li
-        class="border-r border-r-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
-      >
+      <li class="border-r border-r-gray-400 px-3 hover:text-red-600 cursor-pointer">
         Help
       </li>
-      <li
-        class="border-r border-r-gray-400 px-3 hover:text-[#FF4646] cursor-pointer"
-      >
+      <li class="border-r border-r-gray-400 px-3 hover:text-red-600 cursor-pointer">
         Buyer Protection
       </li>
-      <li class="px-3 hover:text-[#FF4646] cursor-pointer">
+      <li class="flex items-center gap-1 px-3 hover:text-red-600 cursor-pointer">
         <Icon icon="ic:sharp-install-mobile" />
         App
       </li>
-      <li
-        on:mouseenter={() => (isAccountMenu = true)}
-        on:mouseleave={() => (isAccountMenu = false)}
-        class="{isAccountMenu
-          ? "bg-white border z-40 shadow-[0_15px_100px_40px_rgba(0,0,0,0.3)]"
-          : "border border-[#FAFAFA]"} relative flex items-center px-2.5 hover:text-[#FF4646] h-full cursor-pointer"
-      >
-        <Icon icon="ph:user-thin" />
-        Account
-        <Icon icon="mdi:chevron-down"/>
+      <li class="relative">
+        <button
+          on:click={()=> isAccountMenu = !isAccountMenu}
+          class="{isAccountMenu
+            ? "bg-white border z-40 shadow-[0_15px_100px_40px_rgba(0,0,0,0.3)]"
+            : "border border-[#FAFAFA]"} relative flex items-center gap-1 px-2.5 hover:text-red-600 h-full cursor-pointer"
+        >
+          <Icon icon="ph:user-thin" />
+          Account
+          <Icon icon="mdi:chevron-down"/>
+        </button>
         {#if isAccountMenu}
           <div
+            use:clickOutside
+            on:click_outside={()=> setTimeout(()=>{isAccountMenu = false},0)}
+            transition:fade
             id="AccountMenu"
             class="absolute bg-white w-[220px] text-[#333333] z-40 top-[38px] -left-[100px] border-x border-b"
           >
-            <div v-if="!user">
-              <div class="text-semibold text-[15px] my-4 px-3">
-                Welcome to AliExpress!
+            {#if !user}
+              <div>
+                <div class="text-semibold text-[15px] my-4 px-3">
+                  Welcome to AliExpress!
+                </div>
+                <div class="flex items-center gap-1 px-3 mb-3">
+                  <a
+                    href="/auth"
+                    class="bg-red-600 text-center w-full text-[16px] rounded-sm text-white font-semibold p-2"
+                  >
+                    Login / Register
+                  </a>
+                </div>
               </div>
-              <div class="flex items-center gap-1 px-3 mb-3">
-                <a
-                  href="/auth"
-                  class="bg-[#FF4646] text-center w-full text-[16px] rounded-sm text-white font-semibold p-2"
-                >
-                  Login / Register
-                </a>
-              </div>
-            </div>
+            {/if}
             <div class="border-b" />
             <ul class="bg-white">
-              <li
-                class="text-[13px] py-2 px-4 w-full hover:bg-gray-200"
-              >
+              <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
                 My Orders
               </li>
-              <li
-                v-if="user"
-                class="text-[13px] py-2 px-4 w-full hover:bg-gray-200"
-              >
-                Sign out
-              </li>
+              {#if user}
+                <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
+                  Sign out
+                </li>
+              {/if}
             </ul>
           </div>
         {/if}
@@ -85,18 +82,14 @@
     </ul>
   </div>
   <div id="MainHeader" class="flex items-center w-full bg-white">
-    <div
-      class="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto"
-    >
-      <a href="/" class="min-w-[170px]">
-        <img width="170" src="/AliExpress-logo.png" alt=""/>
+    <div class="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto">
+      <a href="/" class="min-w-[170px] w-[170px]">
+        <img src={logo} alt="logo"/>
       </a>
 
       <div class="max-w-[700px] w-full md:block hidden">
         <div class="relative">
-          <div
-            class="flex items-center border-2 border-[#FF4646] rounded-md w-full"
-          >
+          <div class="flex items-center border-2 border-red-600 rounded-md w-full">
             <input
               class=" w-full placeholder-gray-400 text-sm pl-3 focus:outline-none"
               placeholder="kitchen accessories"
@@ -108,7 +101,7 @@
                 class="mr-2"
               />
             {/if}
-            <button class="flex items-center h-[100%] p-1.5 px-2 bg-[#FF4646]">
+            <button class="flex items-center h-[100%] p-1.5 px-2 bg-red-600">
               <Icon icon="ph:magnifying-glass" />
             </button>
           </div>
@@ -122,8 +115,10 @@
                     class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                   >
                     <div class="flex items-center">
-                      <img class="rounded-md" width="40" src={item.url} />
-                      <div class="truncate ml-2">{item.title}</div>
+                      <img class="rounded-md" src={item.url} alt=""/>
+                      <div class="truncate ml-2">
+                        {item.title}
+                      </div>
                     </div>
                     <div class="truncate">${item.price / 100}</div>
                   </a>
@@ -140,15 +135,13 @@
           on:mouseenter={() => (isCartHover = true)}
           on:mouseleave={() => (isCartHover = false)}
         >
-          <span
-            class=" absolute flex items-center justify-center -right-[3px] top-0 bg-[#FF4646] h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full"
-          >
+          <span class="absolute flex items-center justify-center -right-[3px] top-0 bg-red-600 h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full">
             {0}
           </span>
           <div class="min-w-[40px]">
             <Icon
               icon="ph:shopping-cart-simple-light"
-              color={isCartHover ? '#FF4646' : ''}
+              class="hover:text-red-600"
             />
           </div>
         </button>

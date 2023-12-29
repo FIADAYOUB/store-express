@@ -6,7 +6,7 @@
 
 <div class="app">
 	<Header />
-	<main class="bg-blue-500">
+	<main class="mt-[250px]">
 		<slot />
 	</main>
 	<Footer />
@@ -23,10 +23,9 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
 		width: 100%;
 		max-width: 64rem;
-		margin: 0 auto;
+		margin: 110px auto 0;
 		box-sizing: border-box;
 	}
 

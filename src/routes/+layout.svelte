@@ -4,9 +4,9 @@
   import Header from "./Header.svelte";
 </script>
 
-<div class="app">
+<div class="app bg-slate-100">
 	<Header />
-	<main class="mt-[250px]">
+	<main class="mt-[250px] ">
 		<slot />
 	</main>
 	<Footer />

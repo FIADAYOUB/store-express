@@ -88,12 +88,12 @@
               $ <span class="font-extrabold">{totalPriceComputed}</span>
             </div>
           </div>
-          <button
-            on:click={goToCheckout}
+          <a
+            href="/checkout"
             class=" flex items-center justify-center bg-[#FD374F] w-full text-white text-[21px] font-semibold p-1.5 rounded-full mt-4"
           >
             Checkout
-          </button>
+          </a>
         </div>
 
         <div id="PaymentProtection" class="bg-white rounded-lg p-4 mt-4">

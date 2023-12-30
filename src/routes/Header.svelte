@@ -1,15 +1,23 @@
 <script>
-  import Icon from '@iconify/svelte';
+  import Icon from "@iconify/svelte";
   import { clickOutside } from "$lib/mixins";
-  import { fade } from 'svelte/transition';
-  import logo from '$lib/images/AliExpress-logo.png';
+  import { fade, slide } from "svelte/transition";
+  import logo from "$lib/images/AliExpress-logo.png";
 
   let isAccountMenu = false;
   let isCartHover = false;
   let isSearching = false;
+  let menuOverlay = false;
 
   let items;
   let user;
+
+  function signIn() {
+    menuOverlay = false;
+  }
+  function signOut() {
+    menuOverlay = false;
+  }
 </script>
 
 <div id="MainLayout" class="w-full fixed z-50">
@@ -115,7 +123,7 @@
                     class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                   >
                     <div class="flex items-center">
-                      <img class="rounded-md" src={item.url} alt=""/>
+                      <img class="rounded-md" src={item.url} alt="" />
                       <div class="truncate ml-2">
                         {item.title}
                       </div>
@@ -148,11 +156,72 @@
       </a>
 
       <button
+        on:click={() => (menuOverlay = !menuOverlay)}
         type="button"
         class="md:hidden block rounded-full p-1.5 -mt-[4px] hover:bg-gray-200"
       >
-        <Icon icon="radix-icons:hamburger-menu" />
+        {#if !menuOverlay}
+          <Icon icon="radix-icons:hamburger-menu" />
+        {:else}
+          <Icon icon="mdi:close" />
+        {/if}
       </button>
     </div>
   </div>
 </div>
+{#if menuOverlay}
+  <div class="h-full w-full bg-white fixed z-50 top-20" transition:slide>
+    <div class="flex items-center justify-between pt-5">
+      <ul class="w-full">
+        <li>
+          <a
+            href="/orders"
+            on:click={()=>menuOverlay = !menuOverlay}
+            class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer"
+          >
+            <div class="flex items-center text-[20px] font-semibold">
+              <Icon icon="ph:pen-light" />
+              <span class="pl-4">My Orders</span>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="/shoppingcart"
+            on:click={()=>menuOverlay = !menuOverlay}
+            class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer"
+          >
+            <div class=" flex items-center text-[20px] font-semibold">
+              <Icon icon="ph:shopping-cart-simple-light" />
+              <span class="pl-4">Cart</span>
+            </div>
+            <div class="flex items-center justify-center bg-[#FF4646] h-[35px] min-w-[35px] text-lg text-white rounded-full">
+              {0}
+            </div>
+          </a>
+        </li>
+
+        {#if user}
+          <li class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer">
+            <button on:click={signOut}>
+              <div class=" flex items-center text-[20px] font-semibold">
+                <Icon icon="ph:sign-out-light" />
+                <span class="pl-4">Sign out</span>
+              </div>
+            </button>
+          </li>
+        {:else}
+          <li class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer">
+            <button on:click={signIn}>
+              <div class=" flex items-center text-[20px] font-semibold">
+                <Icon icon="ph:sign-in-light" />
+                <span class="pl-4">Sign in / Register</span>
+              </div>
+            </button>
+          </li>
+        {/if}
+      </ul>
+    </div>
+  </div>
+{/if}

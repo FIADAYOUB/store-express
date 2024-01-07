@@ -2,6 +2,9 @@
 	import "../app.css";
   import Footer from "./Footer.svelte";
   import Header from "./Header.svelte";
+
+	export let data;
+	$:console.log({data});
 </script>
 
 <div class="app bg-slate-100">

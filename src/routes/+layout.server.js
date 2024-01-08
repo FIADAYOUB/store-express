@@ -1,9 +1,5 @@
-
-export const load = async ({event, locals: { sb }}) => {
-	console.log("Ran layout load")
-
-  const { data, error } = await sb.auth.getSession()
+export const load = async ({ locals: { getSession } }) => {
 	return {
-		session: data.session,
-	}
-}
+		session: await getSession()
+	};
+};

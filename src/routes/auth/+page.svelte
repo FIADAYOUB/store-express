@@ -1,25 +1,47 @@
 <script>
-	export let data;
+  import logo from "$lib/images/AliExpress-logo.png";
+  import google from "$lib/images/google-logo.png";
+  import github from "$lib/images/github-logo.png";
 
+  export let data;
 	let { supabase } = data;
   console.log({data});
 
-	async function signInWithGitHub() {
+	async function login(value) {
 		await supabase.auth.signInWithOAuth({
-			provider: 'google',
+			provider: value,
 			options: {
 				redirectTo: 'http://localhost:5173/'
 			}
 		});
 	}
 </script>
+<div id="AuthPage" class="w-full h-[100vh] bg-white">
+    <div class="w-full flex items-center justify-center p-5 border-b border-b-gray-300">
+        <a href="/" class="min-w-[170px]">
+            <img width="170" src={logo} alt="logo">
+        </a>
+    </div>
 
-<div class="grow w-full flex justify-center items-center bg-neutral-100">
-	<div class="bg-white rounded-md shadow-lg p-6">
-		<h2 class="text-center">Welcome</h2>
-		<button
-			class="bg-black text-white w-full text-center py-4 px-4 mt-2 hover:shadow-lg"
-			on:click={signInWithGitHub}>Sign In With GitHub</button
-		>
-	</div>
+    <div class="max-w-[400px] mx-auto px-2">
+
+        <div class="text-center my-6">Login / Register</div>
+
+        <button
+          on:click={()=>login('google')}
+          class=" flex  items-center  justify-center  gap-3 p-1.5 w-full  border  hover:bg-gray-100 rounded-full text-lg font-semibold"
+        >
+            <img class="w-full max-w-[30px]" src={google} alt="">
+            <div>Google</div>
+        </button>
+
+        <button
+          on:click={()=> login('github')}
+          class="mt-4 flex  items-center  justify-center  gap-3 p-1.5 w-full  border  hover:bg-gray-100 rounded-full text-lg font-semibold"
+        >
+            <img class="w-full max-w-[30px]" src={github} alt="">
+            <div>Github</div>
+        </button>
+
+    </div>
 </div>

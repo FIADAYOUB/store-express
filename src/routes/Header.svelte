@@ -110,7 +110,7 @@
             <input
               class=" w-full placeholder-gray-400 text-sm pl-3 focus:outline-none"
               placeholder="kitchen accessories"
-              type="text"
+              type="search"
               bind:value={searchInput}
             />
             {#if isSearching}
@@ -124,7 +124,11 @@
             </button>
           </div>
 
-          <div class="absolute bg-white max-w-[700px] max-h-60 overflow-y-scroll w-full">
+          <div
+            use:clickOutside
+            on:click_outside={()=> searchInput = ""}
+            class="absolute bg-white max-w-[700px] max-h-60 overflow-y-scroll w-full"
+          >
             {#if items?.length > 0}
               {#each items as item}
                 <div class="p-1">

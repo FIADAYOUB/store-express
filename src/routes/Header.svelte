@@ -3,14 +3,16 @@
   import { clickOutside } from "$lib/mixins";
   import { fade, slide } from "svelte/transition";
   import logo from "$lib/images/AliExpress-logo.png";
+  import { page } from "$app/stores";
 
   let isAccountMenu = false;
   let isCartHover = false;
   let isSearching = false;
   let menuOverlay = false;
+  let searchInput = '';
 
-  let items;
-  let user;
+  $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
+  let user = $page.data?.session?.user;
 
   function signIn() {
     menuOverlay = false;
@@ -102,6 +104,7 @@
               class=" w-full placeholder-gray-400 text-sm pl-3 focus:outline-none"
               placeholder="kitchen accessories"
               type="text"
+              bind:value={searchInput}
             />
             {#if isSearching}
               <Icon
@@ -114,7 +117,7 @@
             </button>
           </div>
 
-          <div class="absolute bg-white max-w-[700px] h-auto w-full">
+          <div class="absolute bg-white max-w-[700px] max-h-60 overflow-y-scroll w-full">
             {#if items?.length > 0}
               {#each items as item}
                 <div class="p-1">
@@ -123,7 +126,7 @@
                     class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                   >
                     <div class="flex items-center">
-                      <img class="rounded-md" src={item.url} alt="" />
+                      <img class="h-10 w-10 rounded-md" src={item.url} alt="" />
                       <div class="truncate ml-2">
                         {item.title}
                       </div>

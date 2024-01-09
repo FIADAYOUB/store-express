@@ -5,7 +5,6 @@
 
   export let data;
 	let { supabase } = data;
-  console.log({data});
 
 	async function login(value) {
 		await supabase.auth.signInWithOAuth({

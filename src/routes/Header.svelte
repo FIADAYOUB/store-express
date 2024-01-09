@@ -12,13 +12,18 @@
   let searchInput = '';
 
   $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
-  let user = $page.data?.session?.user;
+  $: user = $page.data?.session?.user;
 
   function signIn() {
     menuOverlay = false;
+    isAccountMenu = false;
   }
-  function signOut() {
-    menuOverlay = false;
+  async function signOut() {
+    isAccountMenu = false;
+    const { error } = await $page.data.supabase.auth.signOut();
+		if (error) {
+			console.log(error);
+		}
   }
 </script>
 
@@ -82,7 +87,9 @@
               </li>
               {#if user}
                 <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
-                  Sign out
+                  <button on:click={signOut} class="w-full text-start">
+                    Sign out
+                  </button>
                 </li>
               {/if}
             </ul>

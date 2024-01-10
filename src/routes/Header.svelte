@@ -4,7 +4,7 @@
   import { fade, slide } from "svelte/transition";
   import logo from "$lib/images/AliExpress-logo.png";
   import { page } from "$app/stores";
-  import { clearCart, getCart, removeFromCart } from '$lib/client/cart';
+  import { panier } from '$lib/store/cart';
 
   let isAccountMenu = false;
   let isCartHover = false;
@@ -14,8 +14,8 @@
 
   $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
   $: user = $page.data?.session?.user;
-  $: cart = getCart();
 
+  $:console.log({$panier});
   function signIn() {
     menuOverlay = false;
     isAccountMenu = false;
@@ -160,7 +160,7 @@
           on:mouseleave={() => (isCartHover = false)}
         >
           <span class="absolute flex items-center justify-center -right-[3px] top-0 bg-red-600 h-[17px] min-w-[17px] text-xs text-white px-0.5 rounded-full">
-            {cart.length}
+            {$panier.length}
           </span>
           <div class="min-w-[40px]">
             <Icon

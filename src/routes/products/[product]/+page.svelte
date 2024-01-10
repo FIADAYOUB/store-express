@@ -1,7 +1,9 @@
 <script>
   import Icon from "@iconify/svelte";
-  import { addToCart } from "$lib/client/cart";
   import { fade } from "svelte/transition";
+
+  import { addToCart } from "$lib/store/cart";
+
   export let data;
   $: product = data.product;
 

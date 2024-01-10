@@ -1,7 +1,8 @@
 <script>
   import Icon from "@iconify/svelte";
 
-  export let product;
+  export let item;
+  const { product, quantity } = item;
 
   function removeFromCart() {}
 </script>

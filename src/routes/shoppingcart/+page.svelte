@@ -6,27 +6,13 @@
   import cartempty from "$lib/images/cart-empty.png";
   import CartItem from "./CartItem.svelte";
 
+  import  { panier } from '$lib/store/cart'
+
   const cards = [visa, mastercard, paypal, applepay];
 
   let user;
   let selectedArray = [];
 
-  let cart = [
-    {
-      id: 1,
-      title: "Product 1",
-      description: "This is description",
-      url: "https://picsum.photos/id/1/800/800",
-      price: 999,
-    },
-    {
-      id: 2,
-      title: "Product 2",
-      description: "This is description",
-      url: "https://picsum.photos/id/3/800/800",
-      price: 80,
-    },
-  ];
 
   let totalPriceComputed = 0;
 
@@ -36,7 +22,7 @@
 </script>
 
 <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
-  {#if !cart.length}
+  {#if !$panier.length}
     <div class="h-[500px] flex items-center justify-center">
       <div class="pt-20">
         <img class="mx-auto w-[250px]" src={cartempty} />
@@ -59,7 +45,7 @@
       <div class="md:w-[65%]">
         <div class="bg-white rounded-lg p-4">
           <div class="text-2xl font-bold mb-2">
-            Shopping Cart ({cart.length})
+            Shopping Cart ({$panier.length})
           </div>
         </div>
 
@@ -70,10 +56,8 @@
         </div>
 
         <div id="Items" class="bg-white rounded-lg p-4 mt-4">
-          {#each cart as product}
-            <CartItem
-              {product}
-            />
+          {#each $panier as product}
+            <CartItem item={product} />
           {/each}
         </div>
       </div>

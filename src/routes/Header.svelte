@@ -173,7 +173,7 @@
       <button
         on:click={() => (menuOverlay = !menuOverlay)}
         type="button"
-        class="md:hidden block rounded-full p-1.5 -mt-[4px] hover:bg-gray-200"
+        class="md:hidden rounded-full h-8 w-8 min-w-8 flex items-center justify-center -mt-[4px] hover:bg-gray-200"
       >
         {#if !menuOverlay}
           <Icon icon="radix-icons:hamburger-menu" />
@@ -212,7 +212,7 @@
               <span class="pl-4">Cart</span>
             </div>
             <div class="flex items-center justify-center bg-[#FF4646] h-[35px] min-w-[35px] text-lg text-white rounded-full">
-              {0}
+              {$panier.length}
             </div>
           </a>
         </li>
@@ -228,12 +228,12 @@
           </li>
         {:else}
           <li class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer">
-            <button on:click={signIn}>
+            <a href="/auth">
               <div class=" flex items-center text-[20px] font-semibold">
                 <Icon icon="ph:sign-in-light" />
                 <span class="pl-4">Sign in / Register</span>
               </div>
-            </button>
+            </a>
           </li>
         {/if}
       </ul>

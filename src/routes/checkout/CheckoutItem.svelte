@@ -1,5 +1,6 @@
 <script>
-  export let product;
+  export let item;
+  const { product, quantity } = item;
 </script>
 
 <div class="flex justify-start my-2">

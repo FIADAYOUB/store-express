@@ -15,7 +15,6 @@
   $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
   $: user = $page.data?.session?.user;
 
-  $:console.log({$panier});
   function signIn() {
     menuOverlay = false;
     isAccountMenu = false;

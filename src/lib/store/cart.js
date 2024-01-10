@@ -7,7 +7,6 @@ export const addToCart = (product) => {
   let itemPosition = items.findIndex(
     (item) => { return item.product.id == product.id }
   )
-    console.log({itemPosition});
   if (itemPosition !== -1) {
     panier.update(() => {
       let updatedItems = items.map((item) => {
@@ -29,21 +28,12 @@ export const addToCart = (product) => {
 export const removeFromCart = (id) => {
   let items = get(panier);
   let itemPosition = items.findIndex(
-    (item) => { return item.id == id }
+    (item) => { return item.product.id == id }
   )
 
-  if (items[itemPosition]?.quantity - 1 === 0) {
-    items.splice(itemPosition, 1);
-  }
+  items.splice(itemPosition, 1);
 
   panier.update(() => {
-    let updatedItems = items.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    });
-
-    return updatedItems;
+    return items
   });
 }

@@ -1,10 +1,9 @@
 <script>
   import Icon from "@iconify/svelte";
+  import { removeFromCart } from '$lib/store/cart'
 
   export let item;
   const { product, quantity } = item;
-
-  function removeFromCart() {}
 </script>
 
 <div class="flex justify-start my-2">

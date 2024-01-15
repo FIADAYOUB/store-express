@@ -5,14 +5,16 @@
   import logo from "$lib/images/AliExpress-logo.png";
   import { page } from "$app/stores";
   import { panier } from '$lib/store/cart';
+  import debounce from 'lodash/debounce';
 
   let isAccountMenu = false;
   let isCartHover = false;
   let isSearching = false;
   let menuOverlay = false;
   let searchInput = '';
+  let items = [];
 
-  $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
+  // $: items = searchInput ? $page?.data?.products.filter((e)=> e.title.includes(searchInput)) : [];
   $: user = $page.data?.session?.user;
 
   function signIn() {
@@ -26,6 +28,17 @@
 			console.log(error);
 		}
   }
+
+  const searchProduct = debounce(async ()=>{
+    const response = await fetch(`/?q=${searchInput}`);
+    items = await response.json();
+  }, 500)
+
+  function closeSearch() {
+    searchInput = "";
+    items = [];
+  }
+
 </script>
 
 <div id="MainLayout" class="w-full fixed z-50">
@@ -113,6 +126,7 @@
               placeholder="kitchen accessories"
               type="search"
               bind:value={searchInput}
+              on:input={searchProduct}
             />
             {#if isSearching}
               <Icon
@@ -127,14 +141,14 @@
 
           <div
             use:clickOutside
-            on:click_outside={()=> searchInput = ""}
+            on:click_outside={closeSearch}
             class="absolute bg-white max-w-[700px] max-h-60 overflow-y-scroll w-full"
           >
             {#if items?.length > 0}
               {#each items as item}
                 <div class="p-1">
                   <a
-                    href="/item.id"
+                    href="/products/{item.id}"
                     class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                   >
                     <div class="flex items-center">

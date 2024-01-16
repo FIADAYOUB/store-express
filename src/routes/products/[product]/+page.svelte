@@ -110,7 +110,7 @@
           {#if isInCart}
             <div>Is Added</div>
           {:else}
-            <div>Add to Cartss</div>
+            <div>Add to Cart</div>
           {/if}
         </button>
       </div>

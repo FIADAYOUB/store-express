@@ -101,9 +101,9 @@
               </li>
               {#if user}
                 <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
-                  <button on:click={signOut} class="w-full text-start">
+                  <a href="/auth/signout" class="w-full text-start">
                     Sign out
-                  </button>
+                  </a>
                 </li>
               {/if}
             </ul>
@@ -233,12 +233,12 @@
 
         {#if user}
           <li class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer">
-            <button on:click={signOut}>
+            <a href="/auth/signout">
               <div class=" flex items-center text-[20px] font-semibold">
                 <Icon icon="ph:sign-out-light" />
                 <span class="pl-4">Sign out</span>
               </div>
-            </button>
+            </a>
           </li>
         {:else}
           <li class="relative flex items-center justify-between py-2.5 border-b px-3 hover:bg-gray-100 cursor-pointer">

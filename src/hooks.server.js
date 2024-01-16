@@ -1,24 +1,11 @@
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { createClient } from '@supabase/supabase-js'
-export const handle = async ({ event, resolve }) => {
-	const supabaseServer = createClient(
-		PUBLIC_SUPABASE_URL,
-		PUBLIC_SUPABASE_ANON_KEY,
-    event
-	);
+import { SvelteKitAuth } from '@auth/sveltekit';
+import GitHub from '@auth/core/providers/github';
+import GoogleProvider from '@auth/core/providers/google';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_ID, GITHUB_SECRET } from '$env/static/private';
 
-	event.locals.sb = supabaseServer;
-
-	event.locals.getSession = async () => {
-		const {
-			data: { session }
-		} = await supabaseServer.auth.getSession();
-		return session;
-	};
-
-	return resolve(event, {
-		filterSerializedResponseHeaders(name) {
-			return name === 'content-range';
-		}
-	});
-};
+export const handle = SvelteKitAuth({
+	providers: [
+		GitHub({ clientId: GITHUB_ID, clientSecret: GITHUB_SECRET }),
+		GoogleProvider({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET }),
+	],
+});

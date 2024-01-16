@@ -1,4 +1,4 @@
-import db from '$lib/mixins/database.js';
+import {db} from '$lib/mixins/database';
 import { error, redirect } from '@sveltejs/kit';
 
 export const actions = {
@@ -17,7 +17,7 @@ export const actions = {
 		const city = formData.get('city');
 		const country = formData.get('country');
 
-    const res = await prisma.addresses.create({
+    const res = await db.addresses.create({
       data: {
           name,
           adress,

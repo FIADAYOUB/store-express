@@ -4,7 +4,6 @@
   import { enhance } from '$app/forms';
 
   let isLoading = false;
-  console.log({$page});
 
 </script>
 

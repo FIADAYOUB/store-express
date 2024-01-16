@@ -2,10 +2,8 @@
 	import "../app.css";
   import Footer from "./Footer.svelte";
   import Header from "./Header.svelte";
-  import { page } from "$app/stores";
 
 
-	$: ({ session } = $page.data);
 
 </script>
 

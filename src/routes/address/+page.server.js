@@ -4,7 +4,6 @@ import { error, redirect } from '@sveltejs/kit';
 export const actions = {
 	updateAdress: async (event) => {
 		const session = await event.locals.getSession();
-    console.log({session});
 		if (!session) {
 			throw redirect(301, '/auth');
 		}

@@ -11,8 +11,6 @@ export const handle = SvelteKitAuth({
   callbacks: {
     jwt({ token, user, profile }) {
       if (user) {
-				console.log({user});
-				console.log({profile});
         token.id = user?.id;
       }
       return token;

@@ -9,7 +9,7 @@ datasource db {
 
 model Addresses {
   id         Int       @id @default(autoincrement())
-  userId     String    @unique @db.Uuid
+  userId     String    @unique
   name       String
   address    String
   zipcode    String
@@ -20,7 +20,7 @@ model Addresses {
 
 model Orders {
   id         Int         @id @default(autoincrement())
-  userId     String      @db.Uuid
+  userId     String
   stripeId   String
   name       String
   address    String

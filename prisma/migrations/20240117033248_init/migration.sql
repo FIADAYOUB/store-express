@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE "Addresses" (
     "id" SERIAL NOT NULL,
-    "userId" UUID NOT NULL,
+    "userId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,
     "zipcode" TEXT NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE "Addresses" (
 -- CreateTable
 CREATE TABLE "Orders" (
     "id" SERIAL NOT NULL,
-    "userId" UUID NOT NULL,
+    "userId" TEXT NOT NULL,
     "stripeId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "address" TEXT NOT NULL,

@@ -12,16 +12,17 @@ export const actions = {
 		// call the open AI endpoint and generate the image
 		const formData = await event.request.formData();
 		const name = formData.get('name');
-		const adress = formData.get('adress');
-		const zipCode = formData.get('zipCode');
+		const address = formData.get('address');
+		const zipcode = formData.get('zipcode');
 		const city = formData.get('city');
 		const country = formData.get('country');
 
     const res = await db.addresses.create({
       data: {
+          userId: session.user.id,
           name,
-          adress,
-          zipCode,
+          address,
+          zipcode,
           city,
           country
       }

@@ -1,6 +1,7 @@
 <script>
   import Icon from "@iconify/svelte";
   import { removeFromCart } from '$lib/store/cart'
+  import QauntityControl from "$lib/components/QauntityControl.svelte";
 
   export let item;
   const { product, quantity } = item;
@@ -26,17 +27,13 @@
         <Icon icon="material-symbols:delete-outline" />
       </button>
     </div>
-
     <div class="text-xl font-semibold">
       $ <span class="font-bold">{product.price}</span>
     </div>
-
     <p class="text-[#009A66] text-xs font-semibold pt-1">
       Free 11-day delivery over ￡8.28
     </p>
-
     <p class="text-[#009A66] text-xs font-semibold pt-1">Free Shipping</p>
-
     <div class="flex items-center justify-end">
       <button
         on:click={removeFromCart}
@@ -45,5 +42,6 @@
         <Icon icon="material-symbols:delete-outline" />
       </button>
     </div>
+    <QauntityControl />
   </div>
 </div>

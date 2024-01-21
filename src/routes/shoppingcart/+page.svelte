@@ -11,10 +11,15 @@
   const cards = [visa, mastercard, paypal, applepay];
 
   let user;
-  let selectedArray = [];
 
+  let totalPrice = 0;
 
-  let totalPriceComputed = 0;
+  $: if($panier?.length) {
+    totalPrice = 0;
+    $panier.forEach(item => {
+      totalPrice += item.product.price / 100
+    })
+  }
 
   function selectedRadioFunc() {}
 
@@ -69,7 +74,7 @@
           <div class="flex items-center justify-between my-4">
             <div class="font-semibold">Total</div>
             <div class="text-2xl font-semibold">
-              $ <span class="font-extrabold">{totalPriceComputed}</span>
+              $ <span class="font-extrabold">{totalPrice.toFixed(2)}</span>
             </div>
           </div>
           <a

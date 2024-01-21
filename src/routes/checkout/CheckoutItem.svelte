@@ -15,7 +15,7 @@
     </div>
 
     <div class="text-lg font-semibold mt-2">
-      $ <span class="font-bold">{product.price}</span>
+      $ <span class="font-bold">{(product.price / 100).toFixed(2)}</span>
     </div>
   </div>
 </div>

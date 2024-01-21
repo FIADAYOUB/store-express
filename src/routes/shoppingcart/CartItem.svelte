@@ -28,7 +28,7 @@
       </button>
     </div>
     <div class="text-xl font-semibold">
-      $ <span class="font-bold">{product.price}</span>
+      $ <span class="font-bold">{(product.price / 100).toFixed(2)}</span>
     </div>
     <p class="text-[#009A66] text-xs font-semibold pt-1">
       Free 11-day delivery over ￡8.28

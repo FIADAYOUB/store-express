@@ -6,7 +6,6 @@
   import { onMount } from "svelte";
 
   let currentAddress;
-  let total = 0;
   let isProcessing = false;
   $: currectUser = $page.data?.session?.user;
 
@@ -16,6 +15,15 @@
       currentAddress = await response.json();
     }
   })
+
+  let totalPrice = 0;
+
+  $: if($panier?.length) {
+    totalPrice = 0;
+    $panier.forEach(item => {
+      totalPrice += item.product.price / 100
+    })
+  }
 </script>
 
 <div id="CheckoutPage" class="mt-4 max-w-[1200px] mx-auto px-2">
@@ -91,7 +99,7 @@
         <div class="flex items-center justify-between my-4">
           <div class="font-semibold">Total</div>
           <div class="text-2xl font-semibold">
-            $ <span class="font-extrabold">{total / 100}</span>
+            $ <span class="font-extrabold">{totalPrice.toFixed(2)}</span>
           </div>
         </div>
 

@@ -2,10 +2,20 @@
   import Icon from "@iconify/svelte";
   import CheckoutItem from "./CheckoutItem.svelte";
   import { panier } from "$lib/store/cart";
+  import { page } from "$app/stores";
+  import { onMount } from "svelte";
 
   let currentAddress;
   let total = 0;
   let isProcessing = false;
+  $: currectUser = $page.data?.session?.user;
+
+  onMount(async () => {
+    if ( currectUser) {
+      const response = await fetch(`/checkout/?userId=${currectUser.id}`);
+      currentAddress = await response.json();
+    }
+})
 </script>
 
 <div id="CheckoutPage" class="mt-4 max-w-[1200px] mx-auto px-2">
@@ -28,23 +38,23 @@
               <ul class="text-xs">
                 <li class="flex items-center gap-2">
                   <div>Contact name:</div>
-                  <div class="font-bold">{currentAddress.data.name}</div>
+                  <div class="font-bold">{currentAddress.name}</div>
                 </li>
                 <li class="flex items-center gap-2">
                   <div>Address:</div>
-                  <div class="font-bold">{currentAddress.data.address}</div>
+                  <div class="font-bold">{currentAddress.address}</div>
                 </li>
                 <li class="flex items-center gap-2">
                   <div>Zip Code:</div>
-                  <div class="font-bold">{currentAddress.data.zipcode}</div>
+                  <div class="font-bold">{currentAddress.zipcode}</div>
                 </li>
                 <li class="flex items-center gap-2">
                   <div>City:</div>
-                  <div class="font-bold">{currentAddress.data.city}</div>
+                  <div class="font-bold">{currentAddress.city}</div>
                 </li>
                 <li class="flex items-center gap-2">
                   <div>Country:</div>
-                  <div class="font-bold">{currentAddress.data.country}</div>
+                  <div class="font-bold">{currentAddress.country}</div>
                 </li>
               </ul>
             </div>

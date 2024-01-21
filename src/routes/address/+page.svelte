@@ -44,11 +44,11 @@
             ? 'outline-2 outline-red-600'
             : 'outline-1 outline-gray-300'} peer"
           placeholder=""
-          name="contactName"
+          name="name"
           type="text"
         />
         <label
-          for="contactName"
+          for="name"
           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transformulaire -translate-y-4
           scale-75 top-2 origin-[0] left-4 bg-white
           {contactNameRules
@@ -59,7 +59,7 @@
         >
           Contact name
         </label>
-        <Hint for="contactName" on="required" let:value>
+        <Hint for="name" on="required" let:value>
           <span class="text-red-600 text-xs ml-3">
             {value} *
           </span>

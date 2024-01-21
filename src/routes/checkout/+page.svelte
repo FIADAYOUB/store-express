@@ -4,15 +4,28 @@
   import { panier } from "$lib/store/cart";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
+  import { PUBLIC_STRIPE_KEY } from '$env/static/public'
+  import { loadStripe } from '@stripe/stripe-js'
+  import { Elements, PaymentElement } from 'svelte-stripe'
+
 
   let currentAddress;
   let isProcessing = false;
+  let stripe;
+  let elements
+
   $: currectUser = $page.data?.session?.user;
+
+  // data from server
+  export let data;
+  $: ({ clientSecret, returnUrl } = data)
 
   onMount(async () => {
     if ( currectUser) {
       const response = await fetch(`/address/?userId=${currectUser.id}`);
       currentAddress = await response.json();
+      // load the Stripe client
+      stripe = await loadStripe(PUBLIC_STRIPE_KEY)
     }
   })
 
@@ -108,7 +121,13 @@
             class="border border-gray-500 p-2 rounded-sm"
             id="card-element"
           />
+          {#if stripe}
+            <Elements {stripe} {clientSecret} bind:elements>
 
+              <!-- display payment related fields -->
+              <PaymentElement />
+            </Elements>
+          {/if}
           <p
             id="card-error"
             role="alert"

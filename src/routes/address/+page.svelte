@@ -3,17 +3,29 @@
   import {page} from '$app/stores';
   import { enhance } from '$app/forms';
   import { useForm, Hint, validators, required } from "svelte-use-form";
+  import { onMount } from 'svelte';
 
   /** @type {import('./$types').ActionData} */
   export let form;
 
   const formulaire = useForm();
 
+  let currentAddress;
+
   $: contactNameRules = $formulaire.contactName?.touched && $formulaire.contactName?.errors.required;
   $: addressRules = $formulaire.address?.touched && $formulaire.address?.errors.required;
   $: zipcodeRules = $formulaire.zipcode?.touched && $formulaire.zipcode?.errors.required;
   $: cityRules = $formulaire.city?.touched && $formulaire.city?.errors.required;
   $: countryRules = $formulaire.country?.touched && $formulaire.country?.errors.required;
+
+  $: currectUser = $page.data?.session?.user;
+
+  onMount(async () => {
+    if ( currectUser) {
+      const response = await fetch(`/address/?userId=${currectUser.id}`);
+      currentAddress = await response.json();
+    }
+  })
 
   let isLoading = false;
 
@@ -23,7 +35,7 @@
   <div class="mx-auto bg-white rounded-lg p-3 min-w-[350px]">
     <div class="text-xl text-bold mb-2">Address Details</div>
     <form
-      action="?/updateAdress"
+      action={currentAddress ? "?/updateAddress" : "?/createAddress"}
       method="POST"
       use:enhance={() => {
         isLoading = true;

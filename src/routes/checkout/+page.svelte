@@ -12,10 +12,10 @@
 
   onMount(async () => {
     if ( currectUser) {
-      const response = await fetch(`/checkout/?userId=${currectUser.id}`);
+      const response = await fetch(`/address/?userId=${currectUser.id}`);
       currentAddress = await response.json();
     }
-})
+  })
 </script>
 
 <div id="CheckoutPage" class="mt-4 max-w-[1200px] mx-auto px-2">

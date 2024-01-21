@@ -5,6 +5,7 @@
   import applepay from "$lib/images/applepay.png";
   import cartempty from "$lib/images/cart-empty.png";
   import CartItem from "./CartItem.svelte";
+	import { applyAction, deserialize } from '$app/forms';
 
   import  { panier } from '$lib/store/cart'
 
@@ -21,9 +22,16 @@
     })
   }
 
-  function selectedRadioFunc() {}
+	async function handleSubmit(event) {
+		const response = await fetch(event.currentTarget.action, {
+			method: 'POST',
+			body: JSON.stringify($panier)
+		});
 
-  function goToCheckout() {}
+		const result = deserialize(await response.text());
+
+		applyAction(result);
+	}
 </script>
 
 <div id="ShoppingCartPage" class="mt-4 max-w-[1200px] mx-auto px-2">
@@ -69,7 +77,7 @@
 
       <div class="md:hidden block my-4" />
       <div class="md:w-[35%]">
-        <div id="Summary" class="bg-white rounded-lg p-4">
+        <!-- <div id="Summary" class="bg-white rounded-lg p-4">
           <div class="text-2xl font-extrabold mb-2">Summary</div>
           <div class="flex items-center justify-between my-4">
             <div class="font-semibold">Total</div>
@@ -83,7 +91,27 @@
           >
             Checkout
           </a>
-        </div>
+        </div> -->
+
+        <form
+				class="flex flex-row justify-center gap-x-5 w-full"
+				method="post"
+				on:submit|preventDefault={handleSubmit}
+			>
+				<button
+					class=""
+					type="button"
+					on:click={() => {
+						clearCart();
+						cart = getCart();
+					}}
+				>
+					clear cart</button
+				>
+				<button type="submit" class="">
+					checkout</button
+				>
+			</form>
 
         <div id="PaymentProtection" class="bg-white rounded-lg p-4 mt-4">
           <div class="text-lg font-semibold mb-2">Payment methods</div>

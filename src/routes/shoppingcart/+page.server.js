@@ -5,32 +5,26 @@ export const actions = {
 	default: async (event) => {
 		const body = (await event.request.json());
 
-		const user = event.locals.user;
-    console.log("-----------------------------------------------------------------------");
-    console.log({user});
+		const session = await event.locals.getSession();
+		const user = session.user;
 
-		const customerId = user ? user.stripe_customer_id ?? undefined : undefined;
+		// TODO
+    const customerId = user ? user.stripe_customer_id ?? undefined : undefined;
 
-		const session = await stripe.checkout.sessions.create({
-			shipping_address_collection: {
-				allowed_countries: ['US']
-			},
+		const stripeSession = await stripe.checkout.sessions.create({
 			line_items: [
 			{
-        price: "price_1OAGYBDVy0rtNA6WZ7fSwK2d",
-        quantity: 2
+        price: "price_1Ob93YJAOjTCLtikqcH48vjT",//TODO
+        quantity: 1
       }
       ],
-			customer: customerId,
-			mode: 'payment',
+      mode: 'subscription',
 			success_url: `${event.url.origin}/success`,
 			cancel_url: `${event.url.origin}/cancel`,
-			automatic_tax: { enabled: true },
-			billing_address_collection: 'required'
 		});
 
-		if (session.url) {
-			redirect(307, session.url);
+		if (stripeSession.url) {
+			redirect(307, stripeSession.url);
 		}
 
 		// TODO: make these errors not suck

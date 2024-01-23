@@ -4,44 +4,38 @@
   import { panier } from "$lib/store/cart";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
-  import { PUBLIC_STRIPE_KEY } from '$env/static/public'
-  import { loadStripe } from '@stripe/stripe-js'
-  import { Elements, PaymentElement } from 'svelte-stripe'
-
+  import Payment from "$lib/components/Payment.svelte";
 
   let currentAddress;
   let isProcessing = false;
-  let stripe;
-  let elements
 
   $: currectUser = $page.data?.session?.user;
 
   // data from server
   export let data;
-  $: ({ clientSecret, returnUrl } = data)
+  $: ({ clientSecret, returnUrl } = data);
 
   onMount(async () => {
-    if ( currectUser) {
+    if (currectUser) {
       const response = await fetch(`/address/?userId=${currectUser.id}`);
       currentAddress = await response.json();
       // load the Stripe client
-      stripe = await loadStripe(PUBLIC_STRIPE_KEY)
     }
-  })
+  });
 
   let totalPrice = 0;
 
-  $: if($panier?.length) {
+  $: if ($panier?.length) {
     totalPrice = 0;
-    $panier.forEach(item => {
-      totalPrice += item.product.price / 100
-    })
+    $panier.forEach((item) => {
+      totalPrice += item.product.price / 100;
+    });
   }
 </script>
 
-<div id="CheckoutPage" class="mt-4 max-w-[1200px] mx-auto px-2">
-  <div class="md:flex gap-4 justify-between mx-auto w-full">
-    <div class="md:w-[65%]">
+<div id="CheckoutPage" class="mt-4 max-w-[1200px] w-full mx-auto px-2">
+  <div class="md:flex gap-4 justify-between w-full ">
+    <div class="md:w-1/2">
       <div class="bg-white rounded-lg p-4">
         <div class="text-xl font-semibold mb-2">Shipping Address</div>
         {#if currentAddress}
@@ -96,9 +90,7 @@
         {/each}
       </div>
     </div>
-
-    <div class="md:hidden block my-4" />
-    <div class="md:w-[35%]">
+    <div class="md:w-1/2">
       <div id="PlaceOrder" class="bg-white rounded-lg p-4">
         <div class="text-2xl font-extrabold mb-2">Summary</div>
 
@@ -116,37 +108,26 @@
           </div>
         </div>
 
-        <form>
-          <div
-            class="border border-gray-500 p-2 rounded-sm"
-            id="card-element"
-          />
-          {#if stripe}
-            <Elements {stripe} {clientSecret} bind:elements>
-
-              <!-- display payment related fields -->
-              <PaymentElement />
-            </Elements>
-          {/if}
-          <p
-            id="card-error"
-            role="alert"
-            class="text-red-700 text-center font-semibold"
-          />
-
-          <button
-            class:disabled={isProcessing}
-            type="submit"
-            class="{isProcessing
-              ? 'opacity-70'
-              : 'opacity-100'} mt-4 bg-gradient-to-r from-[#FE630C] to-[#FF3200] w-full text-white text-[21px] font-semibold p-1.5 rounded-full"
-          >
-            {#if isProcessing}
-              <Icon icon="eos-icons:loading" />
-            {:else}
-              <div>Place order</div>
-            {/if}
-          </button>
+        <form
+          action="?/payment"
+          method="post"
+          class="antialiased"
+        >
+          <Payment let:valide>
+            <button
+              class:disabled={!valide}
+              type="submit"
+              class="{!valide
+                ? 'opacity-70'
+                : 'opacity-100'} mt-4 bg-gradient-to-r from-[#FE630C] to-[#FF3200] w-full text-white text-[21px] font-semibold p-1.5 rounded-full"
+            >
+              {#if !valide}
+                <Icon icon="eos-icons:loading" />
+              {:else}
+                <div>Place order</div>
+              {/if}
+            </button>
+          </Payment>
         </form>
       </div>
 

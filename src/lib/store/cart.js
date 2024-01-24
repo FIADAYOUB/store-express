@@ -1,6 +1,8 @@
 import { writable, get } from "svelte/store";
 
 export const panier = writable([]);
+export const userLocale = writable("");
+export const currencyCode = writable("");
 
 export const addToCart = (product) => {
   let items = get(panier);

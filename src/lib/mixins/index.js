@@ -1,3 +1,5 @@
+import { currencyCode, userLocale } from "$lib/store/cart";
+import { get } from 'svelte/store'
 /** Dispatch event on click outside of node */
 export function clickOutside(node) {
   const handleClick = event => {
@@ -46,4 +48,16 @@ export function ripple(node) {
       node.removeEventListener('click', addRipple);
     },
   };
+}
+
+export const formatCurrency = (value: number) => {
+  const majorUnits = value / 100
+
+  const locale = get(userLocale) ?? 'en-US'
+  const currency = get(currencyCode) ?? 'USD'
+
+  return new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: currency,
+  }).format(majorUnits)
 }

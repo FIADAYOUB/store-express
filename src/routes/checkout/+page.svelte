@@ -6,13 +6,20 @@
   import { onMount } from "svelte";
   import Payment from "$lib/components/Payment.svelte";
 
-  let currentAddress;
+  let currentAddress = {
+    name: "",
+    address: "",
+    zipcode: "",
+    city: "",
+    country: "",
+  };
   let isProcessing = false;
 
   $: currectUser = $page.data?.session?.user;
 
   // data from server
   export let data;
+
   $: ({ clientSecret, returnUrl } = data);
 
   onMount(async () => {
@@ -31,6 +38,7 @@
       totalPrice += item.product.price / 100;
     });
   }
+
 </script>
 
 <div id="CheckoutPage" class="mt-4 max-w-[1200px] w-full mx-auto px-2">
@@ -113,22 +121,62 @@
           method="post"
           class="antialiased"
         >
-          <Payment let:valide>
+          <Payment let:isProcessing>
             <button
-              class:disabled={!valide}
+              class:disabled={!isProcessing}
               type="submit"
-              class="{!valide
+              class="{!isProcessing
                 ? 'opacity-70'
                 : 'opacity-100'} mt-4 bg-gradient-to-r from-[#FE630C] to-[#FF3200] w-full text-white text-[21px] font-semibold p-1.5 rounded-full"
             >
-              {#if !valide}
+              {#if !isProcessing}
                 <Icon icon="eos-icons:loading" />
               {:else}
                 <div>Place order</div>
               {/if}
             </button>
           </Payment>
-        </form>
+
+            <input
+              name="name"
+              type="text"
+              class="hidden"
+              bind:value={currentAddress.name}
+            />
+            <input
+              name="address"
+              type="text"
+              class="hidden"
+              bind:value={currentAddress.address}
+            />
+
+            <input
+              name="zipcode"
+              type="text"
+              class="hidden"
+              bind:value={currentAddress.zipcode}
+            />
+
+            <input
+              name="city"
+              type="text"
+              class="hidden"
+              bind:value={currentAddress.city}
+            />
+
+            <input
+              name="country"
+              type="text"
+              class="hidden"
+              bind:value={currentAddress.country}
+            />
+
+            <input
+              name="panier"
+              type="text"
+              value={JSON.stringify($panier)}
+              class="hidden"
+            >
       </div>
 
       <div class="bg-white rounded-lg p-4 mt-4">

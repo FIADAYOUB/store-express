@@ -3,30 +3,32 @@
 
   import { loadStripe } from '@stripe/stripe-js';
 
-  let valide = false;
+  import { PUBLIC_STRIPE_KEY } from '$env/static/public';
 
-  let paymentToken = "";
+  let isProcessing = false;
+
+  let paymentId = "";
 
   onMount(async () => {
-    const stripe = await loadStripe('pk_test_51OarTJJAOjTCLtika2uL9jPFXFx7EcDqKeA1whUuoT6xeDEpDxjBP51vIQonvRnyGZY4HxEerXM2WEVi0xi8Jmgh00ESH3j3CX');
+    const stripe = await loadStripe(PUBLIC_STRIPE_KEY);
     const elements = stripe.elements();
 
     const card = elements.create('card');
     const cardError = document.getElementById('card-errors');
 
     card.on('change', async function(event) {
-      valide = false;
+      isProcessing = false;
 
       cardError.textContent = event.error ? event.error.message : null;
 
       if (event.complete) {
-        const {token, error} = await stripe.createToken(card);
+        const {error, token} = await stripe.createToken(card);
 
         if (error) {
           cardError.textContent = error.message;
         } else {
-          valide = true;
-          paymentToken = token.id;
+          isProcessing = true;
+          paymentId = token.id;
         }
       }
     });
@@ -39,5 +41,6 @@
 </div>
 <div id="card-errors" class="m-2 text-red-600"></div>
 <div class="mt-4 flex items-center justify-center">
-  <slot {valide}/>
+  <slot {isProcessing}/>
 </div>
+<input type="text" class="hiedden" name="stripeId" bind:value={paymentId}>

@@ -12,8 +12,8 @@ export const actions = {
 			const name = data.get('name');
 			const address = data.get('address');
 			const zipcode = data.get('zipcode');
-			const country = data.get('stripeId');
-			const city = data.get('stripeId');
+			const country = data.get('country');
+			const city = data.get('city');
 			const panier = data.get('panier');
 			console.log({panier: JSON.parse(panier)});
 

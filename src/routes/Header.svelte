@@ -96,12 +96,12 @@
             {/if}
             <div class="border-b" />
             <ul class="bg-white">
-              <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
-                <a href="/orders">
-                  My Orders
-                </a>
-              </li>
               {#if user}
+                <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
+                  <a href="/orders">
+                    My Orders
+                  </a>
+                </li>
                 <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
                   <a href="/auth/signout" class="w-full text-start">
                     Sign out

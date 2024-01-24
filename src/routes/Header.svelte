@@ -117,7 +117,7 @@
   <div id="MainHeader" class="flex items-center w-full bg-white">
     <div class="flex lg:justify-start justify-between gap-10 max-w-[1150px] w-full px-3 py-5 mx-auto">
       <a href="/" class="min-w-[170px] w-[170px]">
-        <img src={logo} alt="logo"/>
+        <img loading="lazy" src={logo} alt="logo"/>
       </a>
 
       <div class="max-w-[700px] w-full md:block hidden">
@@ -154,7 +154,7 @@
                     class="flex items-center justify-between w-full cursor-pointer hover:bg-gray-100"
                   >
                     <div class="flex items-center">
-                      <img class="h-10 w-10 rounded-md" src={item.url} alt="" />
+                      <img loading="lazy" class="h-10 w-10 rounded-md" src={item.url} alt="" />
                       <div class="truncate ml-2">
                         {item.title}
                       </div>

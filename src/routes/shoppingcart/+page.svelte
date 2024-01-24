@@ -38,7 +38,7 @@
   {#if !$panier.length}
     <div class="h-[500px] flex items-center justify-center">
       <div class="pt-20">
-        <img class="mx-auto w-[250px]" src={cartempty} />
+        <img loading="lazy" class="mx-auto w-[250px]" src={cartempty} alt="empty card"/>
 
         <div class="text-xl text-center mt-4">No items yet?</div>
         {#if !user}
@@ -96,7 +96,7 @@
           <div class="text-lg font-semibold mb-2">Payment methods</div>
           <div class="flex items-center justify-start gap-8 my-4">
             {#each cards as card}
-              <img class="h-6" src={card} alt="" />
+              <img loading="lazy" class="h-6" src={card} alt="payment" />
             {/each}
           </div>
 

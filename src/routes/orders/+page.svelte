@@ -26,7 +26,7 @@
                   class="flex items-center gap-3 p-1 hover:underline hover:text-blue-500"
                   href={`/products/${item.productId}`}
                 >
-                  <img class="w-20 rounded-lg" src={item.product.url} alt={item.product.title} />
+                  <img loading="lazy" class="w-20 rounded-lg" src={item.product.url} alt={item.product.title} />
                   {item.product.title}
                 </a>
               {/each}

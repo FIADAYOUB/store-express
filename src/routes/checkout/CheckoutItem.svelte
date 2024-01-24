@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex justify-start my-2">
-  <img class="rounded-md w-[90px]" src={product.url} alt=""/>
+  <img loading="lazy" class="rounded-md w-[90px]" src={product.url} alt=""/>
 
   <div class="overflow-hidden pl-2">
     <div class="flex items-center">

@@ -30,7 +30,7 @@
     <div class="md:flex gap-4 justify-between mx-auto w-full">
       <div class="md:w-[40%]">
         {#if currentImage}
-          <img class="rounded-lg object-fit" src={currentImage} alt="" />
+          <img loading="lazy" class="rounded-lg object-fit" src={currentImage} alt="" />
         {/if}
         {#if images[0] !== ""}
           <div class="flex items-center justify-center mt-2">

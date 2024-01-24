@@ -97,7 +97,9 @@
             <div class="border-b" />
             <ul class="bg-white">
               <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">
-                My Orders
+                <a href="/orders">
+                  My Orders
+                </a>
               </li>
               {#if user}
                 <li class="text-[13px] py-2 px-4 w-full hover:bg-gray-200">

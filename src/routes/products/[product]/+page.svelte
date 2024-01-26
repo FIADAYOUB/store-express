@@ -3,13 +3,14 @@
   import { fade } from "svelte/transition";
 
   import { addToCart } from "$lib/store/cart";
+  import { formatCurrency } from "$lib/mixins";
 
   export let data;
   $: product = data.product;
 
   $: currentImage = product?.url;
 
-  $: priceComputed = product?.price ? product.price / 100 : 0;
+  $: priceComputed = product?.price ? product.price : 0;
 
   let isInCart = false;
   let addedProduct = false;
@@ -80,7 +81,7 @@
         <div class="border-b" />
 
         <div class="flex items-center justify-start gap-2 my-2">
-          <div class="text-xl font-bold">$ {priceComputed}</div>
+          <div class="text-xl font-bold">{formatCurrency(priceComputed)}</div>
           <span
             class="bg-[#F5F5F5] border text-[#C08562] text-[9px] font-semibold px-1.5 rounded-sm"
           >
@@ -89,7 +90,7 @@
         </div>
 
         <p class="text-[#009A66] text-xs font-semibold pt-1">
-          Free 11-day delivery over ￡8.28
+          Free 11-day delivery over {formatCurrency(828)}
         </p>
 
         <p class="text-[#009A66] text-xs font-semibold pt-1">Free Shipping</p>

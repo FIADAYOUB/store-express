@@ -1,6 +1,6 @@
 <script>
   import Icon from "@iconify/svelte";
-  import { clickOutside } from "$lib/mixins";
+  import { clickOutside, formatCurrency } from "$lib/mixins";
   import { fade, slide } from "svelte/transition";
   import logo from "$lib/images/AliExpress-logo.png";
   import { page } from "$app/stores";
@@ -159,7 +159,7 @@
                         {item.title}
                       </div>
                     </div>
-                    <div class="truncate">${item.price / 100}</div>
+                    <div class="truncate">{ formatCurrency(item.price)}</div>
                   </a>
                 </div>
               {/each}

@@ -2,6 +2,7 @@
   import Icon from "@iconify/svelte";
   import { removeFromCart } from '$lib/store/cart'
   import QauntityControl from "$lib/components/QauntityControl.svelte";
+  import { formatCurrency } from "$lib/mixins";
 
   export let item;
   const { product, quantity } = item;
@@ -28,10 +29,10 @@
       </button>
     </div>
     <div class="text-xl font-semibold">
-      $ <span class="font-bold">{(product.price / 100).toFixed(2)}</span>
+      <span class="font-bold">{formatCurrency(product.price)}</span>
     </div>
     <p class="text-[#009A66] text-xs font-semibold pt-1">
-      Free 11-day delivery over ￡8.28
+      Free 11-day delivery over {formatCurrency(828)}
     </p>
     <p class="text-[#009A66] text-xs font-semibold pt-1">Free Shipping</p>
     <div class="flex items-center justify-end">

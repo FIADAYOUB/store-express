@@ -5,6 +5,7 @@
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import Payment from "$lib/components/Payment.svelte";
+  import { formatCurrency } from "$lib/mixins";
 
   let currentAddress = {
     name: "",
@@ -35,7 +36,7 @@
   $: if ($panier?.length) {
     totalPrice = 0;
     $panier.forEach((item) => {
-      totalPrice += item.product.price / 100;
+      totalPrice += item.product.price;
     });
   }
 
@@ -112,7 +113,7 @@
         <div class="flex items-center justify-between my-4">
           <div class="font-semibold">Total</div>
           <div class="text-2xl font-semibold">
-            $ <span class="font-extrabold">{totalPrice.toFixed(2)}</span>
+            <span class="font-extrabold">{formatCurrency(totalPrice)}</span>
           </div>
         </div>
 

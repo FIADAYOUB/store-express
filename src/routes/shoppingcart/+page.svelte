@@ -8,6 +8,7 @@
 	import { applyAction, deserialize } from '$app/forms';
 
   import  { panier } from '$lib/store/cart'
+  import { formatCurrency } from "$lib/mixins";
 
   const cards = [visa, mastercard, paypal, applepay];
 
@@ -18,7 +19,7 @@
   $: if($panier?.length) {
     totalPrice = 0;
     $panier.forEach(item => {
-      totalPrice += item.product.price / 100
+      totalPrice += item.product.price;
     })
   }
 
@@ -82,7 +83,7 @@
           <div class="flex items-center justify-between my-4">
             <div class="font-semibold">Total</div>
             <div class="text-2xl font-semibold">
-              $ <span class="font-extrabold">{totalPrice.toFixed(2)}</span>
+              <span class="font-extrabold">{formatCurrency(totalPrice)}</span>
             </div>
           </div>
           <a

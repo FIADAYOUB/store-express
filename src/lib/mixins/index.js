@@ -50,11 +50,11 @@ export function ripple(node) {
   };
 }
 
-export const formatCurrency = (value: number) => {
+export const formatCurrency = (value) => {
   const majorUnits = value / 100
 
-  const locale = get(userLocale) ?? 'en-US'
-  const currency = get(currencyCode) ?? 'USD'
+  const locale = 'en-US';
+  const currency = 'USD';
 
   return new Intl.NumberFormat(locale, {
     style: 'currency',

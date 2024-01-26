@@ -1,4 +1,6 @@
 <script>
+  import { formatCurrency } from "$lib/mixins";
+
   export let item;
   const { product, quantity } = item;
 </script>
@@ -15,7 +17,7 @@
     </div>
 
     <div class="text-lg font-semibold mt-2">
-      $ <span class="font-bold">{(product.price / 100).toFixed(2)}</span>
+      <span class="font-bold">{ formatCurrency(product.price)}</span>
     </div>
   </div>
 </div>

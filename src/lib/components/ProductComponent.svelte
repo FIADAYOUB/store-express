@@ -1,10 +1,11 @@
 <script>
+  import { formatCurrency } from '$lib/mixins';
   import Icon from '@iconify/svelte';
 
   export let product;
 
-  let price = product.price / 100;
-  let oldPrice = ((product.price + (product.price / 20))  / 100).toFixed(2);
+  let price = product.price;
+  let oldPrice = ((product.price + (product.price / 20)));
 
 </script>
 <div
@@ -19,8 +20,8 @@
       >
         <div id="ProductDetails">
             <span class="flex items-center justify-start gap-3 px-1 pt-1">
-                <span class="text-[#FF6674] font-semibold">${ price }</span>
-                <span class="text-gray-500 text-sm text-light line-through">${ oldPrice }</span>
+                <span class="text-[#FF6674] font-semibold">{ formatCurrency(price) }</span>
+                <span class="text-gray-500 text-sm text-light line-through">{ formatCurrency(oldPrice) }</span>
             </span>
             <span class="px-1 relative -top-1.5 text-[#FF6674] text-xs font-semibold">
                 Extra 5% off

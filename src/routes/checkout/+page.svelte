@@ -21,13 +21,10 @@
   // data from server
   export let data;
 
-  $: ({ clientSecret, returnUrl } = data);
-
   onMount(async () => {
     if (currectUser) {
       const response = await fetch(`/address/?userId=${currectUser.id}`);
       currentAddress = await response.json();
-      // load the Stripe client
     }
   });
 
@@ -36,7 +33,7 @@
   $: if ($panier?.length) {
     totalPrice = 0;
     $panier.forEach((item) => {
-      totalPrice += item.product.price;
+      totalPrice += item.product.price * item.quantity;
     });
   }
 

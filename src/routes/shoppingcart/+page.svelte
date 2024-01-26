@@ -19,7 +19,7 @@
   $: if($panier?.length) {
     totalPrice = 0;
     $panier.forEach(item => {
-      totalPrice += item.product.price;
+      totalPrice += item.product.price * item.quantity;
     })
   }
 

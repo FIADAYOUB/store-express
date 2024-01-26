@@ -15,7 +15,6 @@ export const actions = {
 			const country = data.get('country');
 			const city = data.get('city');
 			const panier = data.get('panier');
-			console.log({panier: JSON.parse(panier)});
 
 
 			const order = await db.orders.create({
@@ -35,6 +34,7 @@ export const actions = {
 					data: {
 						orderId: order.id,
 						productId: Number(item.product.id),
+						quantity: item.quantity,
 					}
 				})
 			});

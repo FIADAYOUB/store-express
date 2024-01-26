@@ -26,7 +26,7 @@
     <button
       type="button"
       on:click={() => {handleChange(false)}}
-      disabled={qte < 1}
+      disabled={qte === 1}
       class="relative overflow-hidden border border-[#CCC] h-[35px] w-[35px] p-0 bg-gray-50 disabled:bg-[#E0E0E0] disabled:text-gray-400 font-bold rounded-l-md"
     >
       -

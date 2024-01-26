@@ -35,6 +35,7 @@ model OrderItem {
   id         Int       @id @default(autoincrement())
   orderId    Int
   productId  Int
+  quantity  Int
   created_at DateTime? @default(now()) @db.Timestamptz(6)
   order      Orders    @relation(fields: [orderId], references: [id])
   product    Products  @relation(fields: [productId], references: [id])

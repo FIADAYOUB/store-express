@@ -33,9 +33,22 @@ export const removeFromCart = (id) => {
     (item) => { return item.product.id == id }
   )
 
-  items.splice(itemPosition, 1);
+  if (itemPosition !== -1) {
+    panier.update(() => {
+      let updatedItems = items.map((item) => {
+        if (item.product.id === id) {
+          return { ...item, quantity: item.quantity - 1 };
+        }
+        return item;
+      });
 
-  panier.update(() => {
-    return items
-  });
+      return updatedItems;
+    });
+  } else {
+    items.splice(itemPosition, 1);
+
+    panier.update(() => {
+      return items
+    });
+  }
 }

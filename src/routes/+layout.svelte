@@ -3,8 +3,6 @@
   import Footer from "./Footer.svelte";
   import Header from "./Header.svelte";
 
-
-
 </script>
 
 <div class="app bg-slate-100">

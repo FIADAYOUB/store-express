@@ -1,11 +1,20 @@
 <script>
   import Icon from "@iconify/svelte";
-  import { removeFromCart } from '$lib/store/cart'
+  import { addToCart, removeFromCart } from '$lib/store/cart'
   import QauntityControl from "$lib/components/QauntityControl.svelte";
   import { formatCurrency } from "$lib/mixins";
 
   export let item;
+
   const { product, quantity } = item;
+
+  function handleChange (event) {
+    if (event.detail.isAdd) {
+      addToCart(product)
+    } else {
+      removeFromCart(product.id)
+    }
+  }
 </script>
 
 <div class="flex justify-start my-2">
@@ -43,6 +52,6 @@
         <Icon icon="material-symbols:delete-outline" />
       </button>
     </div>
-    <QauntityControl />
+    <QauntityControl qte={quantity} on:change={handleChange}/>
   </div>
 </div>

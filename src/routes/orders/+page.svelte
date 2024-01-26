@@ -27,7 +27,13 @@
                   href={`/products/${item.productId}`}
                 >
                   <img loading="lazy" class="w-20 rounded-lg" src={item.product.url} alt={item.product.title} />
-                  {item.product.title}
+                  <div>
+                    <h2>
+                      {item.product.title}
+                    </h2>
+                    <div>Quantiy : <span class="font-bold">{item.quantity}</span></div>
+
+                  </div>
                 </a>
               {/each}
             </div>
